@@ -1,0 +1,26 @@
+name: Skip build if check failed
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      need-build: ${{ steps.check.outputs.need-build }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Check fail
+        id: check
+        run: |
+          echo "::set-output name=need-build::false"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: check
+    if: ${{ needs.check.outputs.need-build == 'true' }}
+    steps:
+      - run: echo start build...

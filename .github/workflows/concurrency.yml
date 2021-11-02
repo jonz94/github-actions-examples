@@ -1,0 +1,14 @@
+name: concurrency
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
+concurrency: concurrency
+
+jobs:
+  sleep:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 120
