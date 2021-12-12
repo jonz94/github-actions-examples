@@ -1,0 +1,27 @@
+name: matrix
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: 'bash'
+
+jobs:
+  compgen:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: list all the commands
+        run: compgen -c || echo "no command exist..."
+      - name: list all the aliases
+        run: compgen -a || echo "no alias exist..."
+      - name: list all the built-ins
+        run: compgen -b || echo "no built-in exist..."
+      - name: list all the keywords
+        run: compgen -k || echo "no keyword exist..."
+      - name: list all the functions
+        run: compgen -A function || echo "no function exist..."
