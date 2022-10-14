@@ -13,7 +13,7 @@ jobs:
       - name: Check pass
         id: check
         run: |
-          echo "::set-output name=need-build::true"
+          echo "need-build=true" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
