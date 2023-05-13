@@ -1,0 +1,22 @@
+name: Pass output to next job
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+jobs:
+  first:
+    runs-on: ubuntu-latest
+    outputs:
+      message: ${{ steps.set-output.outputs.message }}
+    steps:
+      - name: Set output
+        id: set-output
+        run: |
+          echo "message=hello-world" >> $GITHUB_OUTPUT
+
+  second:
+    runs-on: ubuntu-latest
+    needs: first
+    steps:
+      - run: echo ${{ needs.first.outputs.message }}
