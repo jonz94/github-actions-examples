@@ -1,0 +1,11 @@
+name: list installed packages
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - run: apt list --installed
