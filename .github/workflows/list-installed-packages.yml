@@ -5,7 +5,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  list:
+  apt:
     runs-on: ubuntu-latest
     steps:
       - run: apt list --installed
+
+  # https://unix.stackexchange.com/a/411473/378105
+  dpkg:
+    runs-on: ubuntu-latest
+    steps:
+      - run: dpkg -l
+      - run: dpkg -l | grep ^ii
+      - run: dpkg -l | grep ^ii | awk '{print $2}'
