@@ -1,0 +1,18 @@
+name: lowercase
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+jobs:
+  lowercase:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/orgs/community/discussions/25768#discussioncomment-3249183
+      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+      - name: lowercase
+        run: |
+          UPPERCASE_NAME=GITHUB
+          LOWERCASE_NAME="${UPPERCASE_NAME,,}"
+          echo "uppercase name is ${UPPERCASE_NAME}"
+          echo "lowercase name is ${LOWERCASE_NAME}"
