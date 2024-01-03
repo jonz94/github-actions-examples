@@ -1,0 +1,75 @@
+name: shell parameter expansion
+
+on:
+  # allow manually trigger
+  workflow_dispatch:
+
+jobs:
+  batch1:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        styles: ["Fixed", "FixedSlab", "Mono", "MonoSlab"]
+        orthographies: ["CL", "HC", "J", "K", "SC", "TC"]
+        variants:
+          [
+            "Regular",
+            "Italic",
+            "Bold",
+            "BoldItalic",
+            "SemiBold",
+            "SemiBoldItalic",
+            "Light",
+            "LightItalic",
+            "ExtraLight",
+            "ExtraLightItalic",
+          ]
+    steps:
+      - name: Set output
+        id: set-output
+        run: |
+          matrix_style=${{ matrix.styles }}
+          matrix_orthography=${{ matrix.orthographies }}
+          matrix_variant=${{ matrix.variants }}
+          lowercase_style=${matrix_style,,}
+          style=${lowercase_style/slab/-slab}
+          orthography=${matrix_orthography,,}
+          variant=${matrix_variant,,}
+          echo "filename=sarasa-${style}-${orthography}-${variant}" >> $GITHUB_OUTPUT
+      - name: Get output
+        run: echo filename is ${{ steps.set-output.outputs.filename }}
+
+  batch2:
+    needs: batch1
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        styles: ["Term", "TermSlab", "Gothic", "Ui"]
+        orthographies: ["CL", "HC", "J", "K", "SC", "TC"]
+        variants:
+          [
+            "Regular",
+            "Italic",
+            "Bold",
+            "BoldItalic",
+            "SemiBold",
+            "SemiBoldItalic",
+            "Light",
+            "LightItalic",
+            "ExtraLight",
+            "ExtraLightItalic",
+          ]
+    steps:
+      - name: Set output
+        id: set-output
+        run: |
+          matrix_style=${{ matrix.styles }}
+          matrix_orthography=${{ matrix.orthographies }}
+          matrix_variant=${{ matrix.variants }}
+          lowercase_style=${matrix_style,,}
+          style=${lowercase_style/slab/-slab}
+          orthography=${matrix_orthography,,}
+          variant=${matrix_variant,,}
+          echo "filename=sarasa-${style}-${orthography}-${variant}" >> $GITHUB_OUTPUT
+      - name: Get output
+        run: echo filename is ${{ steps.set-output.outputs.filename }}
